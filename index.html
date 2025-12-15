@@ -5,88 +5,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shopee Philippines Best Deals</title>
-<meta name="description" content="Discover the best Shopee Philippines deals, discounts, vouchers, and daily finds. Shop smart and save more today!">
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #f6f6f6;
-        color: #333;
-    }
-
-    .container {
-        max-width: 420px;
-        margin: auto;
-        background: #ffffff;
-        min-height: 100vh;
-    }
-
-    header {
-        background: #ee4d2d;
-        color: #fff;
-        padding: 25px 20px;
-        text-align: center;
-    }
-
-    header h1 {
-        margin: 0;
-        font-size: 24px;
-    }
-
-    header p {
-        margin-top: 8px;
-        font-size: 14px;
-        opacity: 0.95;
-    }
-
-    .section {
-        padding: 20px;
-    }
-
-    .highlight {
-        background: #fff3f0;
-        border-left: 4px solid #ee4d2d;
-        padding: 15px;
-        margin-bottom: 20px;
-        font-size: 14px;
-    }
-
-    .benefits li {
-        margin-bottom: 10px;
-        font-size: 14px;
-    }
-
-    .cta-btn {
-        display: block;
-        text-align: center;
-        background: #ee4d2d;
-        color: #fff;
-        text-decoration: none;
-        padding: 15px;
-        border-radius: 6px;
-        font-weight: bold;
-        font-size: 16px;
-        margin: 15px 0;
-    }
-
-    .cta-btn:hover {
-        background: #d63f23;
-    }
-
-    .trust {
-        text-align: center;
-        font-size: 12px;
-        color: #777;
-        margin-top: 10px;
-    }
-
-    footer {
-        text-align: center;
-        padding: 15px;
-        font-size: 12px;
-        color: #777;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f6f6f6;
+}
+.container {
+    max-width: 420px;
+    margin: auto;
+    background: #fff;
+    min-height: 100vh;
+}
+header {
+    background: #ee4d2d;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.section {
+    padding: 15px;
+}
+.deal {
+    border: 1px solid #eee;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+}
+.deal h4 {
+    margin: 0 0 5px;
+}
+.tag {
+    font-size: 12px;
+    color: #ee4d2d;
+    font-weight: bold;
+}
+.price {
+    font-weight: bold;
+    margin: 5px 0;
+}
+.cta {
+    display: block;
+    background: #ee4d2d;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+footer {
+    text-align: center;
+    font-size: 12px;
+    padding: 15px;
+    color: #777;
+}
 </style>
 </head>
 
@@ -94,46 +68,44 @@
 
 <div class="container">
 
-    <header>
-        <h1>Best Shopee Deals PH 🇵🇭</h1>
-        <p>Daily Finds • Big Discounts • Trusted Sellers</p>
-    </header>
+<header>
+    <h2>🔥 Shopee Deals Today</h2>
+    <p>Updated Daily • Sulit Finds PH</p>
+</header>
 
-    <div class="section">
+<div class="section" id="deals">
+    <p>Loading deals...</p>
+</div>
 
-        <div class="highlight">
-            💡 Looking for affordable finds on Shopee?<br>
-            We collect the **best deals, trending products, and sulit offers** just for you.
-        </div>
-
-        <h3>🔥 Why Shop Through This Page?</h3>
-        <ul class="benefits">
-            <li>✔ Access to Shopee discounts & vouchers</li>
-            <li>✔ Trending & best-selling products</li>
-            <li>✔ Trusted Shopee sellers only</li>
-            <li>✔ Perfect for budget shopping & gift ideas</li>
-        </ul>
-
-        <a href="YOUR_AFFILIATE_LINK_HERE" class="cta-btn">
-            👉 Shop on Shopee Now
-        </a>
-
-        <div class="trust">
-            100% Safe • Official Shopee Platform
-        </div>
-
-        <a href="YOUR_AFFILIATE_LINK_HERE" class="cta-btn">
-            🔥 Check Today’s Best Deals
-        </a>
-
-    </div>
-
-    <footer>
-        This page contains affiliate links. Prices and availability may change.<br>
-        © 2025 Shopee Finds Philippines
-    </footer>
+<footer>
+    Affiliate Disclaimer: Prices may change anytime.<br>
+    © 2025 Shopee Deals PH
+</footer>
 
 </div>
+
+<script>
+fetch('deals.json')
+.then(response => response.json())
+.then(data => {
+    const dealsContainer = document.getElementById('deals');
+    dealsContainer.innerHTML = '';
+
+    data.forEach(item => {
+        dealsContainer.innerHTML += `
+            <div class="deal">
+                <span class="tag">${item.tag}</span>
+                <h4>${item.title}</h4>
+                <div class="price">${item.price}</div>
+                <a href="${item.link}" class="cta">Shop on Shopee</a>
+            </div>
+        `;
+    });
+})
+.catch(() => {
+    document.getElementById('deals').innerHTML = 'Unable to load deals.';
+});
+</script>
 
 </body>
 </html>
