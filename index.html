@@ -189,6 +189,25 @@ setInterval(()=>{
     <a id="floatLink" href="#" target="_blank">View Deal</a>
   </div>
 </div>
+  <script>
+let floatIndex = 0;
+
+// Link main floating button to first deal
+document.getElementById("floatingBtn").href = allDeals?.[0]?.link || "#";
+
+// Auto-rotate floating HOT deal
+setInterval(() => {
+  if (!allDeals.length) return;
+
+  const deal = allDeals[floatIndex];
+  document.getElementById("floatImg").src = deal.image;
+  document.getElementById("floatTitle").innerText = deal.title;
+  document.getElementById("floatLink").href = deal.link;
+  document.getElementById("floatTag").innerText = deal.tag;
+
+  floatIndex = (floatIndex + 1) % allDeals.length;
+}, 5000);
+  </script>
 
 
 </body>
