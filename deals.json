@@ -1,1 +1,20 @@
-deals.json  →  Landing Page (HTML + JS)  →  Auto updates layout
+[
+  {
+    "title": "Wireless Earbuds",
+    "price": "₱499",
+    "tag": "Best Seller",
+    "link": "YOUR_AFFILIATE_LINK_HERE"
+  },
+  {
+    "title": "Mini Electric Fan",
+    "price": "₱299",
+    "tag": "Hot Deal",
+    "link": "YOUR_AFFILIATE_LINK_HERE"
+  },
+  {
+    "title": "Smart Watch",
+    "price": "₱899",
+    "tag": "Trending",
+    "link": "YOUR_AFFILIATE_LINK_HERE"
+  }
+]
