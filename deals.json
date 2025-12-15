@@ -3,18 +3,21 @@
     "title": "Wireless Earbuds",
     "price": "₱499",
     "tag": "Best Seller",
+    "image": "images/earbuds.jpg",
     "link": "YOUR_AFFILIATE_LINK_HERE"
   },
   {
     "title": "Mini Electric Fan",
     "price": "₱299",
     "tag": "Hot Deal",
+    "image": "images/fan.jpg",
     "link": "YOUR_AFFILIATE_LINK_HERE"
   },
   {
     "title": "Smart Watch",
     "price": "₱899",
     "tag": "Trending",
+    "image": "images/watch.jpg",
     "link": "YOUR_AFFILIATE_LINK_HERE"
   }
 ]
