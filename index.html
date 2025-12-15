@@ -1,66 +1,41 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopee Philippines Best Deals</title>
+<title>Shopee Best Deals PH</title>
+
+<!-- FACEBOOK PIXEL (OPTIONAL) -->
+<!--
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+-->
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f6f6f6;
-}
-.container {
-    max-width: 420px;
-    margin: auto;
-    background: #fff;
-    min-height: 100vh;
-}
-header {
-    background: #ee4d2d;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-.section {
-    padding: 15px;
-}
-.deal {
-    border: 1px solid #eee;
-    padding: 12px;
-    margin-bottom: 12px;
-    border-radius: 6px;
-}
-.deal h4 {
-    margin: 0 0 5px;
-}
-.tag {
-    font-size: 12px;
-    color: #ee4d2d;
-    font-weight: bold;
-}
-.price {
-    font-weight: bold;
-    margin: 5px 0;
-}
-.cta {
-    display: block;
-    background: #ee4d2d;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-}
-footer {
-    text-align: center;
-    font-size: 12px;
-    padding: 15px;
-    color: #777;
-}
+body{margin:0;font-family:Arial;background:#f6f6f6}
+.container{max-width:420px;margin:auto;background:#fff}
+header{background:#ee4d2d;color:#fff;padding:20px;text-align:center}
+.timer{background:#fff3f0;color:#ee4d2d;padding:10px;text-align:center;font-weight:bold}
+.section{padding:15px}
+.filters button{margin:5px;padding:6px 10px;border:none;border-radius:4px;background:#eee}
+.filters button.active{background:#ee4d2d;color:#fff}
+.deal{border:1px solid #eee;padding:12px;margin-bottom:12px;border-radius:6px}
+.tag{color:#ee4d2d;font-size:12px;font-weight:bold}
+.price{font-weight:bold;margin:5px 0}
+.cta{display:block;background:#ee4d2d;color:#fff;text-align:center;padding:10px;border-radius:5px;text-decoration:none}
+.voucher{background:#fff3f0;padding:12px;border-left:4px solid #ee4d2d;margin-bottom:15px}
+footer{text-align:center;font-size:12px;color:#777;padding:15px}
 </style>
 </head>
 
@@ -69,42 +44,86 @@ footer {
 <div class="container">
 
 <header>
-    <h2>🔥 Shopee Deals Today</h2>
-    <p>Updated Daily • Sulit Finds PH</p>
+  <h2>🔥 Shopee Sulit Finds PH</h2>
+  <p>Updated Araw-Araw • Trusted Sellers</p>
 </header>
 
-<div class="section" id="deals">
-    <p>Loading deals...</p>
+<div class="timer">
+  ⏰ Sale ends in: <span id="countdown"></span>
+</div>
+
+<div class="section">
+
+<div class="voucher">
+  🎟️ <b>TIP:</b> Gumamit ng Shopee vouchers + free shipping para mas makatipid!
+</div>
+
+<div class="filters">
+  <button class="active" onclick="filterDeals('All')">All</button>
+  <button onclick="filterDeals('Tech')">Tech</button>
+  <button onclick="filterDeals('Home')">Home</button>
+  <button onclick="filterDeals('Beauty')">Beauty</button>
+</div>
+
+<div id="deals">Loading deals...</div>
+
 </div>
 
 <footer>
-    Affiliate Disclaimer: Prices may change anytime.<br>
-    © 2025 Shopee Deals PH
+Affiliate Disclaimer: May affiliate links ang page na ito.<br>
+© 2025 Shopee Deals PH
 </footer>
 
 </div>
 
 <script>
-fetch('deals.json')
-.then(response => response.json())
-.then(data => {
-    const dealsContainer = document.getElementById('deals');
-    dealsContainer.innerHTML = '';
+let allDeals = [];
 
-    data.forEach(item => {
-        dealsContainer.innerHTML += `
-            <div class="deal">
-                <span class="tag">${item.tag}</span>
-                <h4>${item.title}</h4>
-                <div class="price">${item.price}</div>
-                <a href="${item.link}" class="cta">Shop on Shopee</a>
-            </div>
-        `;
-    });
-})
-.catch(() => {
-    document.getElementById('deals').innerHTML = 'Unable to load deals.';
+fetch('deals.json')
+.then(res => res.json())
+.then(data => {
+  allDeals = data;
+  renderDeals(data);
 });
+
+function renderDeals(data){
+  const d = document.getElementById('deals');
+  d.innerHTML = '';
+  data.forEach(item => {
+    d.innerHTML += `
+      <div class="deal">
+        <div class="tag">${item.tag}</div>
+        <h4>${item.title}</h4>
+        <div class="price">${item.price}</div>
+        <a class="cta" href="${item.link}">👉 Bilhin sa Shopee</a>
+      </div>
+    `;
+  });
+}
+
+function filterDeals(cat){
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  if(cat==='All'){renderDeals(allDeals);return;}
+  renderDeals(allDeals.filter(d=>d.category===cat));
+}
+
+// HOT TODAY ROTATION
+setInterval(()=>{
+  renderDeals([allDeals[Math.floor(Math.random()*allDeals.length)]]);
+},15000);
+
+// COUNTDOWN TIMER
+const end = new Date();
+end.setHours(23,59,59);
+setInterval(()=>{
+  const now = new Date();
+  const diff = end - now;
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('countdown').innerText = `${h}h ${m}m ${s}s`;
+},1000);
 </script>
 
 </body>
