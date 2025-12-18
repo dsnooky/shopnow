@@ -7,7 +7,10 @@
     "category": "Tech",
     "tag": "🔥 HOT DEAL",
     "flash": true,
-    "freeShip": true
+    "freeShip": true,
+    "rating": 4.8,
+    "sold": "12k+",
+    "payday": true
   },
   {
     "title": "Fast Charging USB Cable",
@@ -17,7 +20,10 @@
     "category": "Accessories",
     "tag": "💯 BEST SELLER",
     "flash": false,
-    "freeShip": true
+    "freeShip": true,
+    "rating": 4.7,
+    "sold": "25k+",
+    "payday": true
   },
   {
     "title": "Mini Electric Fan",
@@ -27,6 +33,9 @@
     "category": "Home",
     "tag": "🏠 HOME ESSENTIAL",
     "flash": true,
-    "freeShip": false
+    "freeShip": false,
+    "rating": 4.6,
+    "sold": "8k+",
+    "payday": false
   }
 ]
