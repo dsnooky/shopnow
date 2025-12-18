@@ -18,7 +18,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'YOUR_PIXEL_ID'); /* ← PUT YOUR PIXEL ID */
+fbq('init', 'YOUR_PIXEL_ID'); /* ← Put your Pixel ID */
 fbq('track', 'PageView');
 </script>
 
@@ -96,43 +96,67 @@ Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
 <a id="floatingBtn" href="#" target="_blank">🛒 Shop Now</a>
 
 <script>
-// FETCH DEALS
-let allDeals=[];
-function randomFlashDeals(deals,count=2){
-  const shuffled=deals.sort(()=>0.5-Math.random());
-  return shuffled.slice(0,count).map(d=>({...d,flash:true}));
-}
-function isPayday(){
-  const day=new Date().getDate();
-  return(day>=13&&day<=16)||(day>=28);
+// FETCH GOOGLE SHEET
+let allDeals = [];
+
+function randomFlashDeals(deals, count = 2) {
+  const shuffled = deals.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
 }
 
-fetch('deals.json')
-.then(res=>res.json())
-.then(data=>{
-  allDeals=data;
-  
-  // DAILY RANDOM FLASH DEALS
-  const flashDeals=randomFlashDeals(allDeals);
-  const combinedDeals=flashDeals.concat(allDeals.filter(d=>!d.flash));
+function isPayday() {
+  const day = new Date().getDate();
+  return (day >= 13 && day <= 16) || (day >= 28);
+}
 
-  // PAYDAY FILTER
-  if(isPayday()){
-    renderDeals(combinedDeals.filter(d=>d.payday));
-  }else{
-    renderDeals(combinedDeals);
-  }
+// URL to your published Google Sheet as CSV
+const sheetURL = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv';
 
-  // Update floating CTA
-  document.getElementById("floatingBtn").href=allDeals[0]?.link||"#";
-});
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(csvText => {
+    allDeals = csvToJSON(csvText);
+
+    // 1️⃣ Mark flash deals
+    const flashDeals = randomFlashDeals(allDeals);
+    allDeals = flashDeals.concat(allDeals.filter(d => !d.flash));
+
+    // 2️⃣ Sort deals: Flash → Payday → Rating
+    allDeals.sort((a,b)=>{
+      if(a.flash && !b.flash) return -1;
+      if(!a.flash && b.flash) return 1;
+      if(a.payday && !b.payday) return -1;
+      if(!a.payday && b.payday) return 1;
+      return parseFloat(b.rating) - parseFloat(a.rating);
+    });
+
+    renderDeals(allDeals);
+    document.getElementById("floatingBtn").href = allDeals[0]?.link || "#";
+  });
+
+// CSV to JSON
+function csvToJSON(csvText){
+  const lines = csvText.split("\n");
+  const headers = lines[0].split(",");
+  return lines.slice(1).map(line=>{
+    const obj = {};
+    line.split(",").forEach((val,i)=>{
+      let key = headers[i].trim();
+      val = val.trim();
+      if(val.toUpperCase() === "TRUE") val = true;
+      if(val.toUpperCase() === "FALSE") val = false;
+      obj[key] = val;
+    });
+    return obj;
+  });
+}
 
 // RENDER DEALS
 function renderDeals(data){
-  const d=document.getElementById("deals");
-  d.innerHTML="";
-  data.forEach(item=>{
-    d.innerHTML+=`
+  const d = document.getElementById("deals");
+  d.innerHTML = "";
+  data.forEach(item => {
+    d.innerHTML += `
     <div class="deal">
       <div class="deal-img">
         <img src="${item.image}">
@@ -148,8 +172,8 @@ function renderDeals(data){
         ${item.voucher?`<div class="voucher">🎟️ ${item.voucher}</div>`:""}
         <div class="meta">⭐ ${item.rating} | ${item.sold} sold</div>
         <a class="cta" href="${item.link}" target="_blank"
-           onclick="fbq('track','Purchase',{content_name:'${item.title}',currency:'PHP'})">
-           Buy on Shopee
+          onclick="fbq('track','Purchase',{content_name:'${item.title}',currency:'PHP'})">
+          Buy on Shopee
         </a>
       </div>
     </div>`;
@@ -158,7 +182,7 @@ function renderDeals(data){
 }
 
 // FILTER
-function filterDeals(cat,el){
+function filterDeals(cat, el){
   document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   if(cat==="All") renderDeals(allDeals);
@@ -166,12 +190,48 @@ function filterDeals(cat,el){
 }
 
 // COUNTDOWN TIMER
-const end=new Date();end.setHours(23,59,59);
+const end = new Date(); end.setHours(23,59,59);
 setInterval(()=>{
-  const now=new Date(),diff=end-now;
-  document.getElementById("countdown").innerText=
+  const now = new Date(), diff = end-now;
+  document.getElementById("countdown").innerText = 
     `${Math.floor(diff/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
 },1000);
 </script>
+  <!-- FLOATING TOP FLASH DEAL -->
+<div id="floatingFlashDeal" style="position:fixed;bottom:80px;right:15px;width:240px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 6px 14px rgba(0,0,0,0.15);z-index:998;display:flex;gap:10px;align-items:center;animation:slideUp .4s ease forwards;">
+  <img id="flashImg" src="" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover">
+  <div>
+    <div id="flashBadges"></div>
+    <div id="flashTitle" style="font-size:12px;font-weight:600;margin:2px 0;"></div>
+    <a id="flashLink" href="#" target="_blank" style="color:#ee4d2d;font-size:12px;font-weight:bold;text-decoration:none;">View Deal</a>
+  </div>
+</div>
+
+<script>
+// FLOATING FLASH DEAL CAROUSEL
+let flashIndex = 0;
+const flashDeals = allDeals.filter(d => d.flash).slice(0, 5); // top 5 flash deals
+
+function updateFloatingFlash() {
+  if(flashDeals.length === 0) return;
+  const deal = flashDeals[flashIndex];
+  document.getElementById("flashImg").src = deal.image;
+  document.getElementById("flashTitle").innerText = deal.title;
+  document.getElementById("flashLink").href = deal.link;
+
+  // badges
+  let badgesHTML = "";
+  if(deal.flash) badgesHTML += '<span class="flash">⚡ FLASH SALE</span> ';
+  if(deal.freeShip) badgesHTML += '<span class="ship">🚚 Free Shipping</span>';
+  document.getElementById("flashBadges").innerHTML = badgesHTML;
+
+  flashIndex = (flashIndex + 1) % flashDeals.length;
+}
+
+// Rotate every 5 seconds
+setInterval(updateFloatingFlash, 5000);
+updateFloatingFlash();
+</script>
+
 </body>
 </html>
