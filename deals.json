@@ -1,41 +1,35 @@
 [
   {
-    "title": "Wireless Bluetooth Earbuds",
+    "title": "Wireless Earbuds",
+    "tag": "Tech",
     "price": "₱299",
-    "image": "images/earbuds.jpg",
-    "link": "https://s.shopee.ph/xxxx",
-    "category": "Tech",
-    "tag": "🔥 HOT DEAL",
-    "flash": true,
-    "freeShip": true,
     "rating": 4.8,
     "sold": "12k+",
-    "payday": true
+    "link": "https://shopee.ph/product1",
+    "image": "https://via.placeholder.com/150",
+    "category": "Tech",
+    "freeShip": true
   },
   {
-    "title": "Fast Charging USB Cable",
-    "price": "₱99",
-    "image": "images/charger.jpg",
-    "link": "https://s.shopee.ph/yyyy",
-    "category": "Accessories",
-    "tag": "💯 BEST SELLER",
-    "flash": false,
-    "freeShip": true,
+    "title": "Coffee Maker",
+    "tag": "Home",
+    "price": "₱1,299",
     "rating": 4.7,
-    "sold": "25k+",
-    "payday": true
+    "sold": "1.2k",
+    "link": "https://shopee.ph/product2",
+    "image": "https://via.placeholder.com/150",
+    "category": "Home",
+    "freeShip": false
   },
   {
-    "title": "Mini Electric Fan",
+    "title": "Phone Case",
+    "tag": "Accessories",
     "price": "₱199",
-    "image": "images/fan.jpg",
-    "link": "https://s.shopee.ph/zzzz",
-    "category": "Home",
-    "tag": "🏠 HOME ESSENTIAL",
-    "flash": true,
-    "freeShip": false,
-    "rating": 4.6,
-    "sold": "8k+",
-    "payday": false
+    "rating": 4.3,
+    "sold": "5k",
+    "link": "https://shopee.ph/product3",
+    "image": "https://via.placeholder.com/150",
+    "category": "Accessories",
+    "freeShip": true
   }
 ]
