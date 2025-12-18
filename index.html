@@ -287,12 +287,19 @@ Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
 let allDeals=[];
 
 fetch('deals.json')
-.then(res=>res.json())
-.then(data=>{
-  allDeals=data;
-  renderDeals(allDeals);
-  document.getElementById("floatingBtn").href=allDeals[0]?.link||"#";
+.then(res => res.json())
+.then(data => {
+  allDeals = data;
+
+  if (isPayday()) {
+    renderDeals(allDeals.filter(d => d.payday));
+  } else {
+    renderDeals(allDeals);
+  }
+
+  document.getElementById("floatingBtn").href = allDeals[0]?.link || "#";
 });
+
  <script>
 function isPayday() {
   const day = new Date().getDate();
