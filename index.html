@@ -4,125 +4,338 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shopee Sulit Finds PH</title>
+
+<!-- GOOGLE FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- FACEBOOK PIXEL -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID'); /* ← PUT YOUR PIXEL ID */
+fbq('track', 'PageView');
+</script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Poppins',sans-serif;background:#f5f5f5;color:#333}
-.container{max-width:420px;margin:auto;background:#f5f5f5;animation:fadeIn .6s ease forwards;}
-.header{background:#ee4d2d;color:#fff;padding:15px;position:sticky;top:0;z-index:100;}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f5f5f5;
+  color:#333;
+}
+
+.container{
+  max-width:420px;
+  margin:auto;
+  background:#f5f5f5;
+  animation:fadeIn .6s ease forwards;
+}
+
+/* HEADER */
+.header{
+  background:#ee4d2d;
+  color:#fff;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
 .header h2{font-size:1.2rem}
 .header p{font-size:12px;opacity:.9}
-.timer{background:#fff3f0;color:#ee4d2d;padding:8px;text-align:center;font-weight:600;font-size:13px;}
-.filters{display:flex;gap:8px;padding:10px;background:#fff;overflow-x:auto;}
-.filters button{border:none;padding:6px 14px;border-radius:20px;background:#eee;font-size:12px;cursor:pointer;}
-.filters button.active{background:#ee4d2d;color:#fff;}
-.section{padding:10px;}
-.deal{background:#fff;border-radius:10px;padding:10px;margin-bottom:12px;display:flex;gap:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);animation:slideUp .4s ease both;transition:.3s;}
+
+/* TIMER */
+.timer{
+  background:#fff3f0;
+  color:#ee4d2d;
+  padding:8px;
+  text-align:center;
+  font-weight:600;
+  font-size:13px;
+}
+
+/* FILTERS */
+.filters{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  background:#fff;
+  overflow-x:auto;
+}
+
+.filters button{
+  border:none;
+  padding:6px 14px;
+  border-radius:20px;
+  background:#eee;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.filters button.active{
+  background:#ee4d2d;
+  color:#fff;
+}
+
+/* SECTION */
+.section{
+  padding:10px;
+}
+
+/* DEAL CARD */
+.deal{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:12px;
+  display:flex;
+  gap:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  animation:slideUp .4s ease both;
+  transition:.3s;
+}
+
 .deal-img{position:relative}
-.deal img{width:95px;height:95px;object-fit:cover;border-radius:8px;}
-.badges{position:absolute;top:6px;left:6px;display:flex;flex-direction:column;gap:4px;}
-.flash{background:linear-gradient(135deg,#ff5722,#ee4d2d);color:#fff;font-size:10px;font-weight:700;padding:3px 6px;border-radius:4px;animation:pulse 1.5s infinite;}
-.ship{background:#fff;color:#00bfa5;font-size:10px;font-weight:600;padding:3px 6px;border-radius:4px;border:1px solid #00bfa5;}
+
+.deal img{
+  width:95px;
+  height:95px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.badges{
+  position:absolute;
+  top:6px;
+  left:6px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.flash{
+  background:linear-gradient(135deg,#ff5722,#ee4d2d);
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  padding:3px 6px;
+  border-radius:4px;
+  animation:pulse 1.5s infinite;
+}
+
+.ship{
+  background:#fff;
+  color:#00bfa5;
+  font-size:10px;
+  font-weight:600;
+  padding:3px 6px;
+  border-radius:4px;
+  border:1px solid #00bfa5;
+}
+
 .deal-content{flex:1}
-.tag{font-size:11px;font-weight:600;color:#ee4d2d;}
-.deal-content h4{font-size:14px;margin:4px 0;line-height:1.3;}
-.price{color:#ee4d2d;font-weight:700;font-size:16px;}
-.meta{font-size:11px;color:#777;margin-bottom:6px;}
-.cta{display:block;background:#ee4d2d;color:#fff;text-align:center;padding:8px;border-radius:6px;font-size:13px;text-decoration:none;font-weight:600;transition:.15s;}
-.cta:hover{transform:scale(1.03);box-shadow:0 6px 12px rgba(238,77,45,.35);}
-.cta:active{transform:scale(.97);}
-#floatingBtn{position:fixed;bottom:20px;right:15px;background:#ee4d2d;color:#fff;padding:12px 18px;border-radius:30px;font-weight:600;text-decoration:none;box-shadow:0 6px 12px rgba(0,0,0,.25);z-index:999;animation:floatPulse 2.5s infinite;}
-footer{text-align:center;font-size:11px;color:#777;padding:15px;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-@keyframes floatPulse{0%{box-shadow:0 0 0 0 rgba(238,77,45,.6)}70%{box-shadow:0 0 0 15px rgba(238,77,45,0)}100%{box-shadow:0 0 0 0 rgba(238,77,45,0)}}
-@media(min-width:600px){.container{max-width:600px}.deal img{width:110px;height:110px}.price{font-size:18px}}
-@media(min-width:900px){body{display:flex;justify-content:center}.container{max-width:800px}.section{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}}
+
+.tag{
+  font-size:11px;
+  font-weight:600;
+  color:#ee4d2d;
+}
+
+.deal-content h4{
+  font-size:14px;
+  margin:4px 0;
+  line-height:1.3;
+}
+
+.price{
+  color:#ee4d2d;
+  font-weight:700;
+  font-size:16px;
+}
+
+.meta{
+  font-size:11px;
+  color:#777;
+  margin-bottom:6px;
+}
+
+.cta{
+  display:block;
+  background:#ee4d2d;
+  color:#fff;
+  text-align:center;
+  padding:8px;
+  border-radius:6px;
+  font-size:13px;
+  text-decoration:none;
+  font-weight:600;
+  transition:.15s;
+}
+
+.cta:hover{
+  transform:scale(1.03);
+  box-shadow:0 6px 12px rgba(238,77,45,.35);
+}
+
+.cta:active{transform:scale(.97)}
+
+/* FLOATING BUTTON */
+#floatingBtn{
+  position:fixed;
+  bottom:20px;
+  right:15px;
+  background:#ee4d2d;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:30px;
+  font-weight:600;
+  text-decoration:none;
+  box-shadow:0 6px 12px rgba(0,0,0,.25);
+  z-index:999;
+  animation:floatPulse 2.5s infinite;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  font-size:11px;
+  color:#777;
+  padding:15px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+@keyframes floatPulse{
+  0%{box-shadow:0 0 0 0 rgba(238,77,45,.6)}
+  70%{box-shadow:0 0 0 15px rgba(238,77,45,0)}
+  100%{box-shadow:0 0 0 0 rgba(238,77,45,0)}
+}
+
+/* RESPONSIVE */
+@media(min-width:600px){
+  .container{max-width:600px}
+  .deal img{width:110px;height:110px}
+  .price{font-size:18px}
+}
+
+@media(min-width:900px){
+  body{display:flex;justify-content:center}
+  .container{max-width:800px}
+  .section{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
-  <div class="header">
-    <h2>🔥 Shopee Sulit Finds PH</h2>
-    <p>Daily Updated • Trusted Sellers</p>
-  </div>
 
-  <div class="timer">
-    ⏰ Sale ends in <span id="countdown"></span>
-  </div>
+<div class="header">
+  <h2>🔥 Shopee Sulit Finds PH</h2>
+  <p>Daily Updated • Trusted Sellers</p>
+</div>
 
-  <div class="filters">
-    <button class="active" onclick="filterDeals('All',this)">All</button>
-    <button onclick="filterDeals('Tech',this)">Tech</button>
-    <button onclick="filterDeals('Home',this)">Home</button>
-    <button onclick="filterDeals('Accessories',this)">Accessories</button>
-  </div>
+<div class="timer">
+  ⏰ Sale ends in <span id="countdown"></span>
+</div>
 
-  <div class="section" id="deals">Loading deals...</div>
+<div class="filters">
+  <button class="active" onclick="filterDeals('All',this)">All</button>
+  <button onclick="filterDeals('Tech',this)">Tech</button>
+  <button onclick="filterDeals('Home',this)">Home</button>
+  <button onclick="filterDeals('Accessories',this)">Accessories</button>
+</div>
 
-  <footer>
-    Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
-    © 2025 Shopee Deals PH
-  </footer>
+<div class="section" id="deals">Loading deals...</div>
+
+<footer>
+Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
+© 2025 Shopee Deals PH
+</footer>
+
 </div>
 
 <a id="floatingBtn" href="#" target="_blank">🛒 Shop Now</a>
 
-<script type="module">
-import { allDeals } from './products.js';
+<script>
+let allDeals=[];
 
-let deals = allDeals;
+fetch('deals.json')
+.then(res=>res.json())
+.then(data=>{
+  allDeals=data;
+  renderDeals(allDeals);
+  document.getElementById("floatingBtn").href=allDeals[0]?.link||"#";
+});
 
 function renderDeals(data){
-  const d = document.getElementById("deals");
-  d.innerHTML = "";
-  data.forEach(item => {
-    d.innerHTML += `
-      <div class="deal">
-        <div class="deal-img">
-          <img src="${item.image}">
-          <div class="badges">
-            ${item.flash ? `<span class="flash">⚡ FLASH SALE</span>` : ""}
-            ${item.freeShip ? `<span class="ship">🚚 Free Shipping</span>` : ""}
-          </div>
+  const d=document.getElementById("deals");
+  d.innerHTML="";
+  data.forEach(item=>{
+    d.innerHTML+=`
+    <div class="deal">
+      <div class="deal-img">
+        <img src="${item.image}">
+        <div class="badges">
+          ${item.flash?`<span class="flash">⚡ FLASH SALE</span>`:""}
+          ${item.freeShip?`<span class="ship">🚚 Free Shipping</span>`:""}
         </div>
-        <div class="deal-content">
-          <div class="tag">${item.tag}</div>
-          <h4>${item.title}</h4>
-          <div class="price">${item.price}</div>
-          <div class="meta">⭐ ${item.rating} | ${item.sold} sold</div>
-          <a class="cta" href="${item.link}" target="_blank">Buy on Shopee</a>
-        </div>
-      </div>`;
+      </div>
+      <div class="deal-content">
+        <div class="tag">${item.tag}</div>
+        <h4>${item.title}</h4>
+        <div class="price">${item.price}</div>
+        <div class="meta">⭐ 4.8 | 10k+ sold</div>
+        <a class="cta" href="${item.link}" target="_blank"
+           onclick="fbq('track','Purchase',{content_name:'${item.title}',currency:'PHP'})">
+           Buy on Shopee
+        </a>
+      </div>
+    </div>`;
+    fbq('track','ViewContent',{content_name:item.title});
   });
-  document.getElementById("floatingBtn").href = data[0]?.link || "#";
 }
 
-function filterDeals(cat, el){
-  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+function filterDeals(cat,el){
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  if(cat === "All") renderDeals(deals);
-  else renderDeals(deals.filter(d => d.tag === cat));
+  if(cat==="All")renderDeals(allDeals);
+  else renderDeals(allDeals.filter(d=>d.category===cat));
 }
 
-renderDeals(deals);
-
-// Countdown Timer
-function updateCountdown() {
-  const now = new Date();
-  const end = new Date();
-  end.setHours(23, 59, 59, 999);
-  const diff = end - now;
-  if(diff > 0){
-    const h = Math.floor(diff/3600000);
-    const m = Math.floor((diff%3600000)/60000);
-    const s = Math.floor((diff%60000)/1000);
-    document.getElementById("countdown").innerText = `${h}h ${m}m ${s}s`;
-  } else document.getElementById("countdown").innerText = "00h 00m 00s";
-}
-setInterval(updateCountdown, 1000);
-updateCountdown();
+const end=new Date();end.setHours(23,59,59);
+setInterval(()=>{
+  const now=new Date(),diff=end-now;
+  document.getElementById("countdown").innerText=
+    `${Math.floor(diff/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
+},1000);
 </script>
+
 </body>
 </html>
