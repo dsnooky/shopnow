@@ -306,6 +306,13 @@ function isPayday() {
   return day >= 13 && day <= 16 || day >= 28;
 }
 </script> 
+  <script>
+function randomFlashDeals(deals, count = 2) {
+  const shuffled = deals.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
+}
+</script>
+
 
 function renderDeals(data){
   const d=document.getElementById("deals");
