@@ -51,6 +51,9 @@ body{font-family:'Poppins',sans-serif;background:#f5f5f5;color:#333}
 .cta:hover{transform:scale(1.03);box-shadow:0 6px 12px rgba(238,77,45,.35)}
 .cta:active{transform:scale(.97)}
 #floatingBtn{position:fixed;bottom:20px;right:15px;background:#ee4d2d;color:#fff;padding:12px 18px;border-radius:30px;font-weight:600;text-decoration:none;box-shadow:0 6px 12px rgba(0,0,0,.25);z-index:999;animation:floatPulse 2.5s infinite}
+#floatingFlashDeal{position:fixed;bottom:80px;right:15px;width:240px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 6px 14px rgba(0,0,0,.15);z-index:998;display:flex;gap:10px;align-items:center;animation:slideUp .4s ease forwards}
+#floatingFlashDeal img{width:60px;height:60px;border-radius:6px;object-fit:cover}
+#floatingFlashDeal .badges{display:flex;flex-direction:column;gap:3px;font-size:10px}
 footer{text-align:center;font-size:11px;color:#777;padding:15px}
 
 /* ANIMATIONS */
@@ -93,73 +96,58 @@ Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
 
 </div>
 
+<!-- Floating CTA -->
 <a id="floatingBtn" href="#" target="_blank">🛒 Shop Now</a>
 
+<!-- Floating Top Flash Deal -->
+<div id="floatingFlashDeal">
+  <img id="flashImg" src="" alt="">
+  <div>
+    <div id="flashBadges"></div>
+    <div id="flashTitle" style="font-weight:600;margin:2px 0;font-size:12px"></div>
+    <a id="flashLink" href="#" target="_blank" style="color:#ee4d2d;font-weight:bold;font-size:12px;text-decoration:none">View Deal</a>
+  </div>
+</div>
+
 <script>
-// FETCH GOOGLE SHEET
+// FETCH DEALS FROM deals.json
 let allDeals = [];
 
-function randomFlashDeals(deals, count = 2) {
-  const shuffled = deals.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
-}
+fetch('deals.json')
+  .then(res => res.json())
+  .then(data => {
+    allDeals = data;
 
-function isPayday() {
-  const day = new Date().getDate();
-  return (day >= 13 && day <= 16) || (day >= 28);
-}
+    // Flash deal ordering
+    const flashDeals = allDeals.filter(d=>d.flash).slice(0,5); // Top 5 flash deals
+    const nonFlashDeals = allDeals.filter(d=>!d.flash);
+    allDeals = flashDeals.concat(nonFlashDeals);
 
-// URL to your published Google Sheet as CSV
-const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRLJJ8LFE8ZPDpm4RJkZmndMDZkL5Mvg1uDWgqelfNrG5QsiwqVlt1Ct337AEOVSxT-0o4jm27GCxEh/pub?output=csv';
-
-fetch(sheetURL)
-  .then(res => res.text())
-  .then(csvText => {
-    allDeals = csvToJSON(csvText);
-
-    // 1️⃣ Mark flash deals
-    const flashDeals = randomFlashDeals(allDeals);
-    allDeals = flashDeals.concat(allDeals.filter(d => !d.flash));
-
-    // 2️⃣ Sort deals: Flash → Payday → Rating
+    // Sort by Flash → Payday → Rating
     allDeals.sort((a,b)=>{
       if(a.flash && !b.flash) return -1;
       if(!a.flash && b.flash) return 1;
       if(a.payday && !b.payday) return -1;
       if(!a.payday && b.payday) return 1;
-      return parseFloat(b.rating) - parseFloat(a.rating);
+      return parseFloat(b.rating)-parseFloat(a.rating);
     });
 
     renderDeals(allDeals);
     document.getElementById("floatingBtn").href = allDeals[0]?.link || "#";
-  });
 
-// CSV to JSON
-function csvToJSON(csvText){
-  const lines = csvText.split("\n");
-  const headers = lines[0].split(",");
-  return lines.slice(1).map(line=>{
-    const obj = {};
-    line.split(",").forEach((val,i)=>{
-      let key = headers[i].trim();
-      val = val.trim();
-      if(val.toUpperCase() === "TRUE") val = true;
-      if(val.toUpperCase() === "FALSE") val = false;
-      obj[key] = val;
-    });
-    return obj;
+    // Initialize floating flash carousel
+    startFlashCarousel();
   });
-}
 
 // RENDER DEALS
 function renderDeals(data){
-  const d = document.getElementById("deals");
-  d.innerHTML = "";
-  data.forEach(item => {
-    d.innerHTML += `
+  const d=document.getElementById("deals");
+  d.innerHTML="";
+  data.forEach(item=>{
+    d.innerHTML+=`
     <div class="deal">
       <div class="deal-img">
-        <img src="${item.image}">
+        <img src="${item.image}" alt="${item.title}">
         <div class="badges">
           ${item.flash?`<span class="flash">⚡ FLASH SALE</span>`:""}
           ${item.freeShip?`<span class="ship">🚚 Free Shipping</span>`:""}
@@ -182,7 +170,7 @@ function renderDeals(data){
 }
 
 // FILTER
-function filterDeals(cat, el){
+function filterDeals(cat,el){
   document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   if(cat==="All") renderDeals(allDeals);
@@ -190,48 +178,36 @@ function filterDeals(cat, el){
 }
 
 // COUNTDOWN TIMER
-const end = new Date(); end.setHours(23,59,59);
+const end=new Date();end.setHours(23,59,59);
 setInterval(()=>{
-  const now = new Date(), diff = end-now;
-  document.getElementById("countdown").innerText = 
+  const now=new Date(),diff=end-now;
+  document.getElementById("countdown").innerText=
     `${Math.floor(diff/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
 },1000);
-</script>
-  <!-- FLOATING TOP FLASH DEAL -->
-<div id="floatingFlashDeal" style="position:fixed;bottom:80px;right:15px;width:240px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 6px 14px rgba(0,0,0,0.15);z-index:998;display:flex;gap:10px;align-items:center;animation:slideUp .4s ease forwards;">
-  <img id="flashImg" src="" alt="" style="width:60px;height:60px;border-radius:6px;object-fit:cover">
-  <div>
-    <div id="flashBadges"></div>
-    <div id="flashTitle" style="font-size:12px;font-weight:600;margin:2px 0;"></div>
-    <a id="flashLink" href="#" target="_blank" style="color:#ee4d2d;font-size:12px;font-weight:bold;text-decoration:none;">View Deal</a>
-  </div>
-</div>
 
-<script>
 // FLOATING FLASH DEAL CAROUSEL
 let flashIndex = 0;
-const flashDeals = allDeals.filter(d => d.flash).slice(0, 5); // top 5 flash deals
+function startFlashCarousel(){
+  const flashDeals = allDeals.filter(d=>d.flash).slice(0,5);
+  if(flashDeals.length===0) return;
 
-function updateFloatingFlash() {
-  if(flashDeals.length === 0) return;
-  const deal = flashDeals[flashIndex];
-  document.getElementById("flashImg").src = deal.image;
-  document.getElementById("flashTitle").innerText = deal.title;
-  document.getElementById("flashLink").href = deal.link;
+  function updateFlash(){
+    const deal = flashDeals[flashIndex];
+    document.getElementById("flashImg").src = deal.image;
+    document.getElementById("flashTitle").innerText = deal.title;
+    document.getElementById("flashLink").href = deal.link;
 
-  // badges
-  let badgesHTML = "";
-  if(deal.flash) badgesHTML += '<span class="flash">⚡ FLASH SALE</span> ';
-  if(deal.freeShip) badgesHTML += '<span class="ship">🚚 Free Shipping</span>';
-  document.getElementById("flashBadges").innerHTML = badgesHTML;
+    let badgesHTML = "";
+    if(deal.flash) badgesHTML += '<span class="flash">⚡ FLASH SALE</span> ';
+    if(deal.freeShip) badgesHTML += '<span class="ship">🚚 Free Shipping</span>';
+    document.getElementById("flashBadges").innerHTML = badgesHTML;
 
-  flashIndex = (flashIndex + 1) % flashDeals.length;
+    flashIndex = (flashIndex + 1) % flashDeals.length;
+  }
+
+  updateFlash();
+  setInterval(updateFlash,5000);
 }
-
-// Rotate every 5 seconds
-setInterval(updateFloatingFlash, 5000);
-updateFloatingFlash();
 </script>
-
 </body>
 </html>
