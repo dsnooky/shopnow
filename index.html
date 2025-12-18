@@ -354,6 +354,9 @@ function randomFlashDeals(deals, count = 2) {
   const shuffled = deals.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
 }
+      const flashDeals = randomFlashDeals(allDeals);
+renderDeals(flashDeals.concat(allDeals.filter(d => !d.flash)));
+
 </script>
 
 
