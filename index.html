@@ -287,12 +287,19 @@ Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
 let allDeals=[];
 
 fetch('deals.json')
-.then(res=>res.json())
-.then(data=>{
-  allDeals=data;
-  renderDeals(allDeals);
-  document.getElementById("floatingBtn").href=allDeals[0]?.link||"#";
+.then(res => res.json())
+.then(data => {
+  allDeals = data;
+
+  if (isPayday()) {
+    renderDeals(allDeals.filter(d => d.payday));
+  } else {
+    renderDeals(allDeals);
+  }
+
+  document.getElementById("floatingBtn").href = allDeals[0]?.link || "#";
 });
+
 
 function renderDeals(data){
   const d=document.getElementById("deals");
@@ -311,7 +318,7 @@ function renderDeals(data){
         <div class="tag">${item.tag}</div>
         <h4>${item.title}</h4>
         <div class="price">${item.price}</div>
-        <div class="meta">⭐ 4.8 | 10k+ sold</div>
+        <div class="meta">⭐ ${item.rating} | ${item.sold} sold</div>
         <a class="cta" href="${item.link}" target="_blank"
            onclick="fbq('track','Purchase',{content_name:'${item.title}',currency:'PHP'})">
            Buy on Shopee
@@ -336,6 +343,23 @@ setInterval(()=>{
     `${Math.floor(diff/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
 },1000);
 </script>
+  <script>
+function isPayday() {
+  const day = new Date().getDate();
+  return day >= 13 && day <= 16 || day >= 28;
+}
+</script>
+  <script>
+function randomFlashDeals(deals, count = 2) {
+  const shuffled = deals.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
+}
+    const flashDeals = randomFlashDeals(allDeals);
+renderDeals(flashDeals.concat(allDeals.filter(d => !d.flash)));
+
+</script>
+
+
 
 </body>
 </html>
