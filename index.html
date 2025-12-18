@@ -334,7 +334,6 @@ function renderDeals(data){
           <img src="${item.image}" alt="${item.title}">
           <div class="badges">
             ${item.flash?`<span class="flash">⚡ FLASH SALE</span>`:""}
-            ${item.freeShip?`<span class="ship">🚚 Free Shipping</span>`:""}
           </div>
         </div>
         <div class="deal-content">
@@ -350,6 +349,7 @@ function renderDeals(data){
     fbq('track','ViewContent',{content_name:item.title});
   });
 }
+
 
 function filterDeals(cat,el){
   document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
