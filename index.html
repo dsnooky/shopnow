@@ -293,6 +293,12 @@ fetch('deals.json')
   renderDeals(allDeals);
   document.getElementById("floatingBtn").href=allDeals[0]?.link||"#";
 });
+ <script>
+function isPayday() {
+  const day = new Date().getDate();
+  return day >= 13 && day <= 16 || day >= 28;
+}
+</script> 
 
 function renderDeals(data){
   const d=document.getElementById("deals");
@@ -311,7 +317,7 @@ function renderDeals(data){
         <div class="tag">${item.tag}</div>
         <h4>${item.title}</h4>
         <div class="price">${item.price}</div>
-        <div class="meta">⭐ 4.8 | 10k+ sold</div>
+        <div class="meta">⭐ ${item.rating} | ${item.sold} sold</div>
         <a class="cta" href="${item.link}" target="_blank"
            onclick="fbq('track','Purchase',{content_name:'${item.title}',currency:'PHP'})">
            Buy on Shopee
