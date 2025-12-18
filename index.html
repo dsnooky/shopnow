@@ -1,102 +1,167 @@
-
 <!DOCTYPE html>
-<html lang="tl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shopee Best Deals PH</title>
 
-<!-- FACEBOOK PIXEL (OPTIONAL) -->
-<!--
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'YOUR_PIXEL_ID');
-fbq('track', 'PageView');
-</script>
--->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-  .site-header {
-  background: #ee4d2d;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  width: 80px;
-  max-width: 100%;
-  margin-bottom: 8px;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f5f5;
+  color: #333;
 }
-  /* Floating Button */
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  background: #f5f5f5;
+}
+
+/* HEADER */
+.header {
+  background: #ee4d2d;
+  color: #fff;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h2 {
+  font-size: 1.2rem;
+}
+
+.header p {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+/* TIMER */
+.timer {
+  background: #fff3f0;
+  color: #ee4d2d;
+  padding: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  background: #fff;
+  gap: 8px;
+}
+
+.filters button {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #eee;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: #ee4d2d;
+  color: #fff;
+}
+
+/* DEAL GRID */
+.section {
+  padding: 10px;
+}
+
+.deal {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+
+.deal img {
+  width: 95px;
+  height: 95px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.deal-content {
+  flex: 1;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ee4d2d;
+}
+
+.deal-content h4 {
+  font-size: 14px;
+  margin: 4px 0;
+  line-height: 1.3;
+}
+
+.price {
+  color: #ee4d2d;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.meta {
+  font-size: 11px;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.cta {
+  display: block;
+  background: #ee4d2d;
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* FLOATING BUTTON */
 #floatingBtn {
   position: fixed;
   bottom: 20px;
   right: 15px;
   background: #ee4d2d;
   color: #fff;
-  padding: 12px 16px;
-  border-radius: 50px;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
+  box-shadow: 0 6px 12px rgba(0,0,0,.25);
   z-index: 999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* Floating Deal Card */
-#floatingDeal {
-  position: fixed;
-  bottom: 80px;
-  right: 15px;
-  width: 220px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 8px;
-  display: flex;
-  gap: 8px;
-  z-index: 998;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-}
-
-#floatingDeal img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-#floatingDeal small {
-  color: #ee4d2d;
-  font-weight: bold;
+/* FOOTER */
+footer {
+  text-align: center;
   font-size: 11px;
+  color: #777;
+  padding: 15px;
 }
-
-#floatingDeal a {
-  font-size: 12px;
-  color: #ee4d2d;
-  text-decoration: none;
-  font-weight: bold;
-}
-body{margin:0;font-family:Arial;background:#f6f6f6}
-.container{max-width:420px;margin:auto;background:#fff}
-header{background:#ee4d2d;color:#fff;padding:20px;text-align:center}
-.timer{background:#fff3f0;color:#ee4d2d;padding:10px;text-align:center;font-weight:bold}
-.section{padding:15px}
-.filters button{margin:5px;padding:6px 10px;border:none;border-radius:4px;background:#eee}
-.filters button.active{background:#ee4d2d;color:#fff}
-.deal{border:1px solid #eee;padding:12px;margin-bottom:12px;border-radius:6px}
-.tag{color:#ee4d2d;font-size:12px;font-weight:bold}
-.price{font-weight:bold;margin:5px 0}
-.cta{display:block;background:#ee4d2d;color:#fff;text-align:center;padding:10px;border-radius:5px;text-decoration:none}
-.voucher{background:#fff3f0;padding:12px;border-left:4px solid #ee4d2d;margin-bottom:15px}
-footer{text-align:center;font-size:12px;color:#777;padding:15px}
 </style>
 </head>
 
@@ -104,39 +169,32 @@ footer{text-align:center;font-size:12px;color:#777;padding:15px}
 
 <div class="container">
 
-<header class="site-header">
-  <img src="shopee.png" alt="Site Logo" class="logo">
-  <h2>Shopee Sulit Finds PH</h2>
-  <p>Updated Araw-Araw • Trusted Sellers</p>
-</header>
-
-<div class="timer">
-  ⏰ Sale ends in: <span id="countdown"></span>
+<div class="header">
+  <h2>🔥 Shopee Sulit Finds PH</h2>
+  <p>Daily Updated • Trusted Shopee Sellers</p>
 </div>
 
-<div class="section">
-
-<div class="voucher">
-  🎟️ <b>TIP:</b> Gumamit ng Shopee vouchers + free shipping para mas makatipid!
+<div class="timer">
+  ⏰ Sale ends in <span id="countdown"></span>
 </div>
 
 <div class="filters">
-  <button class="active" onclick="filterDeals('All')">All</button>
-  <button onclick="filterDeals('Tech')">Tech</button>
-  <button onclick="filterDeals('Home')">Home</button>
-  <button onclick="filterDeals('Accessories')">Accessories</button>
+  <button class="active" onclick="filterDeals('All', this)">All</button>
+  <button onclick="filterDeals('Tech', this)">Tech</button>
+  <button onclick="filterDeals('Home', this)">Home</button>
+  <button onclick="filterDeals('Accessories', this)">Accessories</button>
 </div>
 
-<div id="deals">Loading deals...</div>
-
-</div>
+<div class="section" id="deals">Loading deals...</div>
 
 <footer>
-Affiliate Disclaimer: May affiliate links ang page na ito.<br>
+Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
 © 2025 Shopee Deals PH
 </footer>
 
 </div>
+
+<a id="floatingBtn" href="#" target="_blank">🛒 Shop Now</a>
 
 <script>
 let allDeals = [];
@@ -145,83 +203,53 @@ fetch('deals.json')
 .then(res => res.json())
 .then(data => {
   allDeals = data;
-  renderDeals(data);
+  renderDeals(allDeals);
+  document.getElementById("floatingBtn").href = allDeals[0]?.link || "#";
 });
 
-function renderDeals(data){
+function renderDeals(data) {
   const d = document.getElementById('deals');
   d.innerHTML = '';
   data.forEach(item => {
     d.innerHTML += `
       <div class="deal">
-        <div class="tag">${item.tag}</div>
-        <h4>${item.title}</h4>
-        <div class="price">${item.price}</div>
-        <a class="cta" href="${item.link}">👉 Bilhin sa Shopee</a>
+        <img src="${item.image}" alt="${item.title}">
+        <div class="deal-content">
+          <div class="tag">${item.tag}</div>
+          <h4>${item.title}</h4>
+          <div class="price">${item.price}</div>
+          <div class="meta">⭐ 4.8 | 10k+ sold</div>
+          <a class="cta" href="${item.link}" target="_blank">Buy on Shopee</a>
+        </div>
       </div>
     `;
   });
 }
 
-function filterDeals(cat){
-  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  if(cat==='All'){renderDeals(allDeals);return;}
-  renderDeals(allDeals.filter(d=>d.category===cat));
+function filterDeals(cat, el) {
+  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+
+  if (cat === 'All') {
+    renderDeals(allDeals);
+  } else {
+    renderDeals(allDeals.filter(d => d.category === cat));
+  }
 }
 
-// HOT TODAY ROTATION
-setInterval(()=>{
-  renderDeals([allDeals[Math.floor(Math.random()*allDeals.length)]]);
-},15000);
-
-// COUNTDOWN TIMER
+// Countdown
 const end = new Date();
 end.setHours(23,59,59);
-setInterval(()=>{
+
+setInterval(() => {
   const now = new Date();
   const diff = end - now;
-  const h = Math.floor(diff/3600000);
-  const m = Math.floor((diff%3600000)/60000);
-  const s = Math.floor((diff%60000)/1000);
-  document.getElementById('countdown').innerText = `${h}h ${m}m ${s}s`;
-},1000);
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById("countdown").innerText = `${h}h ${m}m ${s}s`;
+}, 1000);
 </script>
-
-  <!-- FLOATING SHOPEE BUTTON -->
-<a id="floatingBtn" href="https://s.shopee.ph/BMlxHi5ag" target="_blank">
-  🛒 Shop Deals
-</a>
-
-<!-- FLOATING HOT DEAL CARD -->
-<div id="floatingDeal">
-  <img id="floatImg" src="1212.jpg" alt="">
-  <div>
-    <small id="floatTag">🔥 PAYDAY SALE</small>
-    <div id="floatTitle"></div>
-    <a id="floatLink" href="https://s.shopee.ph/805dIJgRVo" target="_blank">View Deal</a>
-  </div>
-</div>
-  <script>
-let floatIndex = 0;
-
-// Link main floating button to first deal
-document.getElementById("floatingBtn").href = allDeals?.[0]?.link || "#";
-
-// Auto-rotate floating HOT deal
-setInterval(() => {
-  if (!allDeals.length) return;
-
-  const deal = allDeals[floatIndex];
-  document.getElementById("floatImg").src = deal.image;
-  document.getElementById("floatTitle").innerText = deal.title;
-  document.getElementById("floatLink").href = deal.link;
-  document.getElementById("floatTag").innerText = deal.tag;
-
-  floatIndex = (floatIndex + 1) % allDeals.length;
-}, 5000);
-  </script>
-<a href="tech.html" class="cta">💻 View Tech Deals</a>
 
 </body>
 </html>
