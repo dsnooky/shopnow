@@ -23,6 +23,22 @@ fbq('track', 'PageView');
 </script>
 
 <style>
+  .filter-link {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #eee;
+  font-size: 12px;
+  color: #333;
+  text-decoration: none;
+  margin-right: 6px;
+}
+
+.filter-link.active {
+  background: #ee4d2d;
+  color: #fff;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
@@ -282,11 +298,14 @@ footer{
   ⏰ Sale ends in <span id="countdown"></span>
 </div>
 
+
 <div class="filters">
-  <button class="active" onclick="filterDeals('All',this)">All</button>
-  <button onclick="filterDeals('Women's Bag',this)">Women's Bag</button>
-  <button onclick="filterDeals('Home',this)">Home</button>
-  <button onclick="filterDeals('Accessories',this)">Accessories</button>
+  <a href="index.html?category=All" class="filter-link">All</a>
+  <a href="index.html?category=Women's Bag" class="filter-link">Women's Bag</a>
+  <a href="index.html?category=Home" class="filter-link">Home</a>
+  <a href="index.html?category=Accessories" class="filter-link">Accessories</a>
+</div>
+
 </div>
 
 <div class="section" id="deals">
@@ -313,6 +332,23 @@ fetch('deals.json')
 .then(res => res.json())
 .then(data => {
   allDeals = data;
+
+  // Get category from URL
+const urlParams = new URLSearchParams(window.location.search);
+let selectedCategory = urlParams.get('category') || 'All';
+
+// Highlight active link
+document.querySelectorAll('.filter-link').forEach(link => {
+  if(link.getAttribute('href').includes(selectedCategory)) {
+    link.classList.add('active');
+  }
+});
+if(selectedCategory === 'All') {
+  renderDeals(allDeals);
+} else {
+  renderDeals(allDeals.filter(d => d.category === selectedCategory));
+}
+
 
   if (isPayday()) {
     renderDeals(allDeals.filter(d => d.payday));
