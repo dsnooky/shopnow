@@ -326,80 +326,52 @@ Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
 <a id="floatingBtn" href="#" target="_blank">🛒 Shop Now</a>
 
 <script>
-let allDeals=[];
+let allDeals = [];
 
 fetch('deals.json')
-.then(res => res.json())
-.then(data => {
-  allDeals = data;
+  .then(res => res.json())
+  .then(data => {
+    allDeals = data;
 
-  // Get category from URL
-const urlParams = new URLSearchParams(window.location.search);
-let selectedCategory = urlParams.get('category') || 'All';
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategory = urlParams.get('category') || 'All';
 
-// Highlight active link
-document.querySelectorAll('.filter-link').forEach(link => {
-  if(link.getAttribute('href').includes(selectedCategory)) {
-    link.classList.add('active');
-  }
-});
-if(selectedCategory === 'All') {
-  renderDeals(allDeals);
-} else {
-  renderDeals(allDeals.filter(d => d.category === selectedCategory));
-}
+    // Highlight active category
+    document.querySelectorAll('.filter-link').forEach(link => {
+      const cat = link.textContent.trim();
+      if (cat === selectedCategory || (selectedCategory === 'All' && cat === 'All')) {
+        link.classList.add('active');
+      }
+    });
 
+    let filteredDeals = allDeals;
 
-  if (isPayday()) {
-    renderDeals(allDeals.filter(d => d.payday));
-  } else {
-    renderDeals(allDeals);
-  }
+    // Category filter
+    if (selectedCategory !== 'All') {
+      filteredDeals = filteredDeals.filter(d => d.category === selectedCategory);
+    }
 
-  document.getElementById("floatingBtn").href = allDeals[0]?.link || "#";
-});
+    // Payday filter
+    if (isPayday()) {
+      filteredDeals = filteredDeals.filter(d => d.payday === true);
+    }
 
+    // Flash deals (random 2)
+    filteredDeals = injectFlashDeals(filteredDeals, 2);
 
-function renderDeals(data){
-  const d = document.getElementById("deals");
-  d.innerHTML = ""; // Clear skeletons
-  data.forEach(item => {
-    d.innerHTML += `
-      <div class="deal">
-        <div class="deal-img">
-          <img src="${item.image}" alt="${item.title}">
-          <div class="badges">
-            ${item.flash?`<span class="flash">⚡ FLASH SALE</span>`:""}
-          </div>
-        </div>
-        <div class="deal-content">
-          <div class="tag">${item.tag}</div>
-          <h4>${item.title}</h4>
-          <div class="price">${item.price}${item.oldPrice?` <span class="old-price">${item.oldPrice}</span>`:""}</div>
-          ${item.voucher?`<div class="voucher">🎟️ ${item.voucher}</div>`:""}
-          <div class="meta">⭐ ${item.rating} | ${item.sold} sold</div>
-          <a class="cta" href="${item.link}" target="_blank">Buy on Shopee</a>
-        </div>
-      </div>`;
+    renderDeals(filteredDeals);
 
-    fbq('track','ViewContent',{content_name:item.title});
+    // Floating button
+    document.getElementById("floatingBtn").href =
+      filteredDeals[0]?.link || "#";
   });
+
+function injectFlashDeals(deals, count) {
+  const shuffled = [...deals].sort(() => 0.5 - Math.random());
+  const flash = shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
+  const normal = deals.filter(d => !flash.find(f => f.title === d.title));
+  return [...flash, ...normal];
 }
-
-
-function filterDeals(cat,el){
-  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  if(cat==="All")renderDeals(allDeals);
-  else renderDeals(allDeals.filter(d=>d.category===cat));
-}
-
-const end=new Date();end.setHours(23,59,59);
-setInterval(()=>{
-  const now=new Date(),diff=end-now;
-  document.getElementById("countdown").innerText=
-    `${Math.floor(diff/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
-},1000);
 </script>
   <script>
 function isPayday() {
