@@ -3,393 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopee Sulit Finds PH</title>
-
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- FACEBOOK PIXEL -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'YOUR_PIXEL_ID'); /* ← PUT YOUR PIXEL ID */
-fbq('track', 'PageView');
-</script>
-
+<title>Simple Online Store</title>
 <style>
-  .filter-link {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: #eee;
-  font-size: 12px;
-  color: #333;
-  text-decoration: none;
-  margin-right: 6px;
-}
-
-.filter-link.active {
-  background: #ee4d2d;
-  color: #fff;
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'Poppins',sans-serif;
-  background:#f5f5f5;
-  color:#333;
-}
-  /* Skeleton Loader */
-.skeleton {
-  display: inline-block;
-  width: 100%;
-  height: 100px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  border-radius: 8px;
-  animation: shimmer 1.5s infinite;
-  margin-bottom: 12px;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-
-.container{
-  max-width:420px;
-  margin:auto;
-  background:#f5f5f5;
-  animation:fadeIn .6s ease forwards;
-}
-
-/* HEADER */
-.header{
-  background:#ee4d2d;
-  color:#fff;
-  padding:15px;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.header h2{font-size:1.2rem}
-.header p{font-size:12px;opacity:.9}
-
-/* TIMER */
-.timer{
-  background:#fff3f0;
-  color:#ee4d2d;
-  padding:8px;
-  text-align:center;
-  font-weight:600;
-  font-size:13px;
-}
-
-/* FILTERS */
-.filters{
-  display:flex;
-  gap:8px;
-  padding:10px;
-  background:#fff;
-  overflow-x:auto;
-}
-
-.filters button{
-  border:none;
-  padding:6px 14px;
-  border-radius:20px;
-  background:#eee;
-  font-size:12px;
-  cursor:pointer;
-}
-
-.filters button.active{
-  background:#ee4d2d;
-  color:#fff;
-}
-
-/* SECTION */
-.section{
-  padding:10px;
-}
-
-/* DEAL CARD */
-.deal{
-  background:#fff;
-  border-radius:10px;
-  padding:10px;
-  margin-bottom:12px;
-  display:flex;
-  gap:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,.05);
-  animation:slideUp .4s ease both;
-  transition:.3s;
-}
-
-.deal-img{position:relative}
-
-.deal img{
-  width:95px;
-  height:95px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.badges{
-  position:absolute;
-  top:6px;
-  left:6px;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-
-.flash{
-  background:linear-gradient(135deg,#ff5722,#ee4d2d);
-  color:#fff;
-  font-size:10px;
-  font-weight:700;
-  padding:3px 6px;
-  border-radius:4px;
-  animation:pulse 1.5s infinite;
-}
-
-.ship{
-  background:#fff;
-  color:#00bfa5;
-  font-size:10px;
-  font-weight:600;
-  padding:3px 6px;
-  border-radius:4px;
-  border:1px solid #00bfa5;
-}
-
-.deal-content{flex:1}
-
-.tag{
-  font-size:11px;
-  font-weight:600;
-  color:#ee4d2d;
-}
-
-.deal-content h4{
-  font-size:14px;
-  margin:4px 0;
-  line-height:1.3;
-}
-
-.price{
-  color:#ee4d2d;
-  font-weight:700;
-  font-size:16px;
-}
-
-.meta{
-  font-size:11px;
-  color:#777;
-  margin-bottom:6px;
-}
-
-.cta{
-  display:block;
-  background:#ee4d2d;
-  color:#fff;
-  text-align:center;
-  padding:8px;
-  border-radius:6px;
-  font-size:13px;
-  text-decoration:none;
-  font-weight:600;
-  transition:.15s;
-}
-
-.cta:hover{
-  transform:scale(1.03);
-  box-shadow:0 6px 12px rgba(238,77,45,.35);
-}
-
-.cta:active{transform:scale(.97)}
-
-/* FLOATING BUTTON */
-#floatingBtn{
-  position:fixed;
-  bottom:20px;
-  right:15px;
-  background:#ee4d2d;
-  color:#fff;
-  padding:12px 18px;
-  border-radius:30px;
-  font-weight:600;
-  text-decoration:none;
-  box-shadow:0 6px 12px rgba(0,0,0,.25);
-  z-index:999;
-  animation:floatPulse 2.5s infinite;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;
-  font-size:11px;
-  color:#777;
-  padding:15px;
-}
-
-/* ANIMATIONS */
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes slideUp{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.05)}
-  100%{transform:scale(1)}
-}
-
-@keyframes floatPulse{
-  0%{box-shadow:0 0 0 0 rgba(238,77,45,.6)}
-  70%{box-shadow:0 0 0 15px rgba(238,77,45,0)}
-  100%{box-shadow:0 0 0 0 rgba(238,77,45,0)}
-}
-
-/* RESPONSIVE */
-@media(min-width:600px){
-  .container{max-width:600px}
-  .deal img{width:110px;height:110px}
-  .price{font-size:18px}
-}
-
-@media(min-width:900px){
-  body{display:flex;justify-content:center}
-  .container{max-width:800px}
-  .section{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-  }
-}
+body {font-family: Arial; margin:0; background:#f5f5f5;}
+header {background:#111; color:#fff; padding:15px; text-align:center;}
+.container {padding:20px;}
+.products {display:grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:20px;}
+.card {background:#fff; padding:15px; border-radius:10px; box-shadow:0 5px 10px rgba(0,0,0,0.1);}
+button {background:#111; color:#fff; border:none; padding:10px; border-radius:5px; cursor:pointer;}
+.cart {position:fixed; top:10px; right:10px; background:#fff; padding:15px; border-radius:10px; width:250px; box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+.cart h3 {margin-top:0;}
+.checkout {background:green; margin-top:10px; width:100%;}
 </style>
 </head>
-
 <body>
+<header>
+<h1>My Online Store</h1>
+</header>
 
 <div class="container">
-
-<div class="header">
-  <h2>🔥 Shopee Sulit Finds PH</h2>
-  <p>Daily Updated • Trusted Sellers</p>
+<div class="products" id="productList"></div>
 </div>
 
-<div class="timer">
-  ⏰ Sale ends in <span id="countdown"></span>
+<div class="cart">
+<h3>Cart</h3>
+<ul id="cartItems"></ul>
+<p>Total: ₱<span id="total">0</span></p>
+<button class="checkout" onclick="checkout()">Checkout</button>
 </div>
-
-
-<div class="filters">
-  <a href="index.html?category=All" class="filter-link">All</a>
-  <a href="index.html?category=Women's Bag" class="filter-link">Women's Bag</a>
-  <a href="index.html?category=Kid's Shoes" class="filter-link">Kid's Shoes</a>
-  <a href="index.html?category=Accessories" class="filter-link">Accessories</a>
-</div>
-
-</div>
-
-<div class="section" id="deals">
-  <!-- Skeletons while fetching -->
-  <div class="skeleton"></div>
-  <div class="skeleton"></div>
-  <div class="skeleton"></div>
-</div>
-
-
-<footer>
-Affiliate Disclaimer: This page contains Shopee affiliate links.<br>
-© 2025 Shopee Deals PH
-</footer>
-
-</div>
-
-<a id="floatingBtn" href="#" target="_blank">🛒 Shop Now</a>
 
 <script>
-let allDeals = [];
+const products = [
+ {name:"Bag", price:499},
+ {name:"Shoes", price:899},
+ {name:"Watch", price:699},
+ {name:"Perfume", price:599}
+];
 
-fetch('deals.json')
-  .then(res => res.json())
-  .then(data => {
-    allDeals = data;
+let cart = [];
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const selectedCategory = urlParams.get('category') || 'All';
-
-    // Highlight active category
-    document.querySelectorAll('.filter-link').forEach(link => {
-      const cat = link.textContent.trim();
-      if (cat === selectedCategory || (selectedCategory === 'All' && cat === 'All')) {
-        link.classList.add('active');
-      }
-    });
-
-    let filteredDeals = allDeals;
-
-    // Category filter
-    if (selectedCategory !== 'All') {
-      filteredDeals = filteredDeals.filter(d => d.category === selectedCategory);
-    }
-
-    // Payday filter
-    if (isPayday()) {
-      filteredDeals = filteredDeals.filter(d => d.payday === true);
-    }
-
-    // Flash deals (random 2)
-    filteredDeals = injectFlashDeals(filteredDeals, 2);
-
-    renderDeals(filteredDeals);
-
-    // Floating button
-    document.getElementById("floatingBtn").href =
-      filteredDeals[0]?.link || "#";
-  });
-
-function injectFlashDeals(deals, count) {
-  const shuffled = [...deals].sort(() => 0.5 - Math.random());
-  const flash = shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
-  const normal = deals.filter(d => !flash.find(f => f.title === d.title));
-  return [...flash, ...normal];
+function displayProducts(){
+ const container = document.getElementById("productList");
+ products.forEach((p,i)=>{
+  container.innerHTML += `
+   <div class="card">
+    <h3>${p.name}</h3>
+    <p>₱${p.price}</p>
+    <button onclick="addToCart(${i})">Add to Cart</button>
+   </div>
+  `;
+ });
 }
-</script>
-  <script>
-function isPayday() {
-  const day = new Date().getDate();
-  return day >= 13 && day <= 16 || day >= 28;
+
+function addToCart(index){
+ cart.push(products[index]);
+ updateCart();
 }
-</script>
-  <script>
-function randomFlashDeals(deals, count = 2) {
-  const shuffled = deals.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count).map(d => ({ ...d, flash: true }));
+
+function updateCart(){
+ const list = document.getElementById("cartItems");
+ const total = document.getElementById("total");
+ list.innerHTML = "";
+ let sum = 0;
+ cart.forEach((item,i)=>{
+  sum += item.price;
+  list.innerHTML += `<li>${item.name} - ₱${item.price}</li>`;
+ });
+ total.textContent = sum;
 }
-    const flashDeals = randomFlashDeals(allDeals);
-renderDeals(flashDeals.concat(allDeals.filter(d => !d.flash)));
 
+function checkout(){
+ if(cart.length === 0){
+  alert("Cart is empty!");
+  return;
+ }
+ alert("Order placed! Total: ₱" + document.getElementById("total").textContent);
+ cart = [];
+ updateCart();
+}
+
+displayProducts();
 </script>
-
-
 
 </body>
 </html>
